@@ -20,11 +20,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         tipAmount.text = "$0.00"
         totalAmount.text = "$0.00"
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,27 +31,21 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        println("view did appear")
-        
-        var defaults = NSUserDefaults.standardUserDefaults()
-        var intValue = defaults.integerForKey("tipDefaultIndex")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let intValue = defaults.integerForKey("tipDefaultIndex")
         tipControl.selectedSegmentIndex = intValue
     }
     
     func updateValues() {
+        let tipPercentages = [0.1, 0.15, 0.2]
+        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let bill = NSString(string: billField.text).doubleValue
         
-        var tipPercentages = [0.1, 0.15, 0.2]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
-        
-        var bill = NSString(string: billField.text).doubleValue
-        
-        var tip = bill * tipPercentage
-        var total = bill + tip
-    
+        let tip = bill * tipPercentage
+        let total = bill + tip
         
         tipAmount.text = String(format: "$%.2f", tip)
         totalAmount.text = String(format: "$%.2f", total)
-        
     }
 
     @IBAction func onTap(sender: AnyObject) {

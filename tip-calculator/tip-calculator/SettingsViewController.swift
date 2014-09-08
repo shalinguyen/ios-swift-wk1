@@ -12,13 +12,11 @@ class SettingsViewController: UIViewController {
 
     @IBOutlet weak var tipSettingsControl: UISegmentedControl!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
-        var defaults = NSUserDefaults.standardUserDefaults()
-        var intValue = defaults.integerForKey("tipDefaultIndex")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let intValue = defaults.integerForKey("tipDefaultIndex")
         tipSettingsControl.selectedSegmentIndex = intValue
     }
 
@@ -29,17 +27,13 @@ class SettingsViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        println("view will disappear")
-        
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setInteger(tipSettingsControl.selectedSegmentIndex, forKey: "tipDefaultIndex")
         defaults.synchronize()
     }
     
     @IBAction func onDoneBtn(sender: AnyObject) {
-        
         dismissViewControllerAnimated(true, completion: nil)
-        
     }
 
     /*
