@@ -20,3 +20,7 @@ Which required and optional stories have you completed?
 - [ ] Add a light/dark color theme to the settings view. In viewWillAppear, update views with the correct theme colors.
 
 ![Preview](https://s3.amazonaws.com/uploads.hipchat.com/72172/510168/Je0m50RLvlK4Jb5/tipit-demo.gif)
+
+Updated version with table accessory checks on settings!
+
+![Preview](https://s3.amazonaws.com/uploads.hipchat.com/72172/510168/pZmDw7NUdWlVP5z/tipit.gif)
