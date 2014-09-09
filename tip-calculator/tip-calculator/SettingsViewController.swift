@@ -8,16 +8,19 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var tipSettingsControl: UISegmentedControl!
+    @IBOutlet weak var tipTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let defaults = NSUserDefaults.standardUserDefaults()
         let intValue = defaults.integerForKey("tipDefaultIndex")
-        tipSettingsControl.selectedSegmentIndex = intValue
+    
+        tipTable.dataSource = self
+        tipTable.delegate = self
+        tipTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,17 +28,43 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(tipSettingsControl.selectedSegmentIndex, forKey: "tipDefaultIndex")
-        defaults.synchronize()
-    }
-    
     @IBAction func onDoneBtn(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
+        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as UITableViewCell
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let intValue = defaults.integerForKey("tipDefaultIndex")
+        
+        
+        if intValue == indexPath.row {
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.None
+        }
+        
+        var arrayOfTips = [10, 15, 20]
+        cell.textLabel?.text = "\(arrayOfTips[indexPath.row])%"
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3;
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(indexPath.row, forKey: "tipDefaultIndex")
+   
+        tipTable.reloadData()
+    }
+
+    
     /*
     // MARK: - Navigation
 
